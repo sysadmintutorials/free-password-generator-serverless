@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>The Password Generator Wizard</title>
+    <style>
+        body {
+          font-family: Arial, sans-serif;
+        }
+    
+        h1 {
+          color: #333;
+          text-align: center;
+        }
+    
+        form {
+          margin: 20px auto;
+          max-width: 400px;
+          padding: 20px;
+          border: 1px solid #ccc;
+          border-radius: 4px;
+          background-color: #f5f5f5;
+        }
+    
+        label {
+          display: block;
+          margin-bottom: 10px;
+          font-weight: bold;
+        }
+    
+        input[type="number"],
+        input[type="text"] {
+          width: 100%;
+          padding: 10px;
+          border: 1px solid #ccc;
+          border-radius: 4px;
+          box-sizing: border-box;
+          font-size: 14px;
+        }
+    
+        input[type="checkbox"] {
+          margin-top: 10px;
+        }
+    
+        input[type="submit"] {
+          display: block;
+          width: 100%;
+          padding: 10px;
+          margin-top: 20px;
+          border: none;
+          border-radius: 4px;
+          background-color: #337ab7;
+          color: #fff;
+          font-size: 14px;
+          cursor: pointer;
+        }
+    
+        .generated-password {
+          font-size: 24px;
+          font-weight: bold;
+          text-align: center;
+          margin-top: 20px;
+          border: 1px solid #ccc;
+          border-radius: 4px;
+          padding: 10px;
+          display: inline-block;
+        }
+    </style>
+</head>
+<body>
+    <h1>The Password Generator Wizard</h1>
+	<center><h2>Serverless: S3 -> API Gateway -> Lambda</h2></center>
+    <form id="passwordForm">
+        <label for="length">Length:</label>
+        <input type="number" id="length" name="length" min="1" max="100" value="12" required>
+        <br>
+        <input type="checkbox" id="uppercase" name="uppercase" checked>
+        <label for="uppercase">Include uppercase letters</label>
+        <br>
+        <input type="checkbox" id="lowercase" name="lowercase" checked>
+        <label for="lowercase">Include lowercase letters</label>
+        <br>
+        <input type="checkbox" id="special_chars" name="special_chars" checked>
+        <label for="special_chars">Include special characters</label>
+        <br>
+        <input type="checkbox" id="numbers" name="numbers" checked>
+        <label for="numbers">Include numbers</label>
+        <br>
+        <label for="exclude_chars">Exclude characters:</label>
+        <input type="text" id="exclude_chars" name="exclude_chars" value="1l0o|`">
+        <br>
+        <input type="button" id="generateButton" value="Generate Password">
+    </form>
+    <center>
+        <div id="generatedPassword" class="generated-password" style="display: none;"></div>
+    </center>
+
+<script>
+  document.getElementById("generateButton").addEventListener("click", generatePassword);
+
+  function generatePassword() {
+    const length = document.getElementById("length").value;
+    const use_uppercase = document.getElementById("uppercase").checked;
+    const use_lowercase = document.getElementById("lowercase").checked;
+    const use_special_chars = document.getElementById("special_chars").checked;
+    const use_numbers = document.getElementById("numbers").checked;
+    const exclude_chars = document.getElementById("exclude_chars").value;
+
+    const data = {
+      length: parseInt(length), // Ensure length is parsed as an integer
+      use_uppercase: use_uppercase,
+      use_lowercase: use_lowercase,
+      use_special_chars: use_special_chars,
+      use_numbers: use_numbers,
+      exclude_chars: exclude_chars
+    };
+
+    fetch('https://r6b4gtw3fl.execute-api.us-east-1.amazonaws.com/pwgen-prod', { // Enter your API Gateway Address
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    })
+    .then(response => response.json())
+    .then(data => {
+      const generatedPassword = data.body.password;
+      document.getElementById("generatedPassword").textContent = generatedPassword;
+      document.getElementById("generatedPassword").style.display = "inline-block";
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
+  }
+</script>
+
+
+</body>
+</html>
