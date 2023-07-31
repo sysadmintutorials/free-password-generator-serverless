@@ -1,0 +1,8 @@
+{
+  "length": 12,
+  "use_uppercase": true,
+  "use_lowercase": true,
+  "use_special_chars": true,
+  "use_numbers": true,
+  "exclude_chars": ""
+}
