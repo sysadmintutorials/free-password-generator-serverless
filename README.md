@@ -21,7 +21,7 @@ Make sure to read my comprehensive blog post, where I walk you through the entir
 https://www.sysadmintutorials.com/elevate-app-to-the-cloud-serverless-magic-with-aws/
 
 ## File Listing & Description
-1. lambda_function.py - Modified Python script architectured for Lambda
+1. lambda_function.py - modified Python script architectured for Lambda
 2. lambda_test_event.json - JSON code used to test our Lambda function
 3. api_gateway_mapping_template.txt - mappings between html and python
 4. s3_bucket_policy.txt - permissions which allow access to our S3 bucket
