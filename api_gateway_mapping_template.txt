@@ -1,0 +1,9 @@
+#set($inputRoot = $input.path('$'))
+{
+  "length": "$inputRoot.length",
+  "use_uppercase": $input.path('$.use_uppercase'),
+  "use_lowercase": $input.path('$.use_lowercase'),
+  "use_special_chars": $input.path('$.use_special_chars'),
+  "use_numbers": $input.path('$.use_numbers'),
+  "exclude_chars": "$inputRoot.exclude_chars"
+}
